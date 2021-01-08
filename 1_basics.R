@@ -1,45 +1,75 @@
-#===============================================================================
-# INTRO TO R PROGRAMMING AND RSTUDIO (12-Jan-2021)
-#===============================================================================
+#==============================================================================!
+# INTRO TO R PROGRAMMING AND RSTUDIO (12-Jan-2021) ####
+#==============================================================================!
 # THE BASICS
+# * Comments versus code
 # * RStudio
 # * Data formats: scalar, vector, matrix, data frame
 # * Subsetting vectors
 # * Date classes: number, string/character, boolean/logical
 # * Setting the working directory + listing local files
 # * Getting help
-#===============================================================================
+#==============================================================================!
 
-#-------------------------------------------------------------------------------
-# General parameters / settings for a script should go at the top:
-#-------------------------------------------------------------------------------
-3 + 4
+#------------------------------------------------------------------------------!
+# Comments versus code ####
+#------------------------------------------------------------------------------!
+# Every R script is fundamentally just a text file.
+# In a standard R script (such as this) each line that starts with a hash
+# character (#) is just comments / annotations and will not be read as code.
+# R assumes that everything else is code.
 
-#-------------------------------------------------------------------------------
-# Data formats: scalars and vectors
-#-------------------------------------------------------------------------------
+# (Later you will learn about "rmarkdown" scripts where the situation is
+# reversed: by default text is interpreted as comments and code must be
+# specifically indicated.)
+
+# Typing four hash marks (#) or dashes (-) at the end of a line makes that line
+# appear in the RStudio navigation pane, available in the top right corner of
+# the script window. Useful to indicate headers to help organise and navigate a
+# script. (four dashes followed by an exclamation mark will be ignored)
+
+#------------------------------------------------------------------------------!
+# RStudio ####
+#------------------------------------------------------------------------------!
+# Good video tutorial:
+# https://rstudio.com/resources/webinars/programming-part-1-writing-code-in-rstudio/
+
+#------------------------------------------------------------------------------!
+# Data structures (1): scalars and vectors ####
+#------------------------------------------------------------------------------!
 # Vectors are simple lists with each item being of the same type.
 # Scalars are really just vectors with a single item.
 # Some useful vectors are 'built' into R:
-# (place the cursor any where in a line of code and press Ctrl-Enter to execute
+# (place the cursor anywhere in a line of code and press Ctrl-Enter to execute
 # the code / Cmd-Enter on a Mac)
-# Results / output will appear in the 'Console' window below
+# Results / output will appear in the 'Console' window below the script window.
 letters
 LETTERS
 month.abb
 month.name
 
-1:10
+#------------------------------------------------------------------------------!
+# Functions ####
+#------------------------------------------------------------------------------!
+# Functions are used to manipulate data.
+# R functions are very similar to worksheet functions in Excel:
+#   1. Each function has a different name
+#   2. Function names are always followed by brackets
+#   3. Information typed between the brackets are called "arguments"
+#   4. Two or more arguments are separated by commas
 
-# Vectors can be generated using the c() function:
-print("Hello")
-cat("Hello")
+# To see a list of all (>1200) built-in functions that come with R
+# (aka "base R") type:
 help(package="base")
-c(14, 6, 2016)
 
-#-------------------------------------------------------------------------------
+# So 'help()' is a first example of a function. ' package="base" ' is the
+# argument here.
+
+
+
+#------------------------------------------------------------------------------!
 # Variables
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Usually data are stored in named VARIABLES
 # * Variables can be long
 # * Variables CANNOT contain spaces
@@ -54,7 +84,7 @@ my.second.variable <- 2019
 print(my.first.variable)
 print(my.second.variable)
 
-# A vector:
+# Vectors can be generated using the c() function:
 v1 <- c(14, 6, 2016)
 
 # Just the variable is equivalent to 'print()'
@@ -89,9 +119,9 @@ names(v3) <- month.abb
 print(v3)
 names(v3)
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Subsetting vectors
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # You can select items from within a vector using square brackets + indices ...
 # A single index number...
 LETTERS
@@ -115,9 +145,9 @@ v4
 c(TRUE, FALSE, TRUE)
 v4[c(TRUE, FALSE, TRUE)]
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Boolean/logical data
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Boolean/logical values are often generated through 'equal' or
 # 'greather/lesser than' (<==>) operations:
 10 > 2
@@ -140,10 +170,10 @@ typeof(1:10)
 typeof(1.2)
 
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Matrices are 2-dimensional arrays/tables where each item (cell) has to be of
 # the same data type:
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 1:24
 mx1 <- matrix(1:24, ncol=6)
 mx1
@@ -156,10 +186,10 @@ mx2
 mx3 <- matrix(LETTERS[1:24], nrow=6, byrow=TRUE)
 mx3
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # One of the great things about vectors and matrices in R is that they can be
 # modified with simple code:
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 print(v3)
 v3 * 100
 
@@ -169,19 +199,19 @@ mx1 + 1000
 mx1
 t(mx1)
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Data frames are the most common container used to store data in R.
 # Each column can be a different data type:
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 df1 <- data.frame(Name=c("Jane", "Jack", "Jaim"),
                   Age=c(5, 12, 30),
                   Female=c(TRUE, FALSE, FALSE))
 df1
 View(df1)
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Subsetting data frames
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Similar to vectors, extract data from data frames using square brackets;
 # rows and columns are separated by a comma:
 print(df1)
@@ -231,9 +261,9 @@ c <- c("Nom", "Age")
 df1[a, b]
 df1[b, c]
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Packages
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Packages extend the basic repertoire of R with new functions.
 # There are three main depositories for R packages: CRAN, Bioconductor and github
 # Packages from CRAN are installed as follows, e.g.:
@@ -253,9 +283,9 @@ df1[b, c]
 # be installed)
 # if (!require(wordcloud2)) install.packages("wordcloud2"); library(wordcloud2)
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # Getting help
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 median(c(1:3, 100, 1000))
 
 # (1) To get help on a specific function the first option usually is to use the
@@ -294,9 +324,9 @@ vignette("magrittr")
 #     * https://www.r-bloggers.com/
 #     * https://feeds.feedburner.com/RBloggers
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # ********************************  EXERCISE!!  ********************************
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------!
 # For the vector v6 below calculate:
 # mean/average
 # median
