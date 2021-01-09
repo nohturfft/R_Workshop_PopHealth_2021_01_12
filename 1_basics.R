@@ -1,9 +1,21 @@
 #==============================================================================!
 # INTRO TO R PROGRAMMING AND RSTUDIO (12-Jan-2021) ####
 #==============================================================================!
-# THE BASICS
-#   * Comments versus code
+
+#==============================================================================!
+# **KEY CONCEPTS**
+#    + Scripting
+#    + Variables
+#    + Data types (numbers, text, boolean)
+#    + Data structures (scalar, vector, matrix, data frame)
+#    + Functions
+#    + Subsetting 1 and 2-dimensional data structures
+#==============================================================================!
+
+#==============================================================================!
+# WORKSHOP CONTENTS
 #   * RStudio
+#   * Scripts: Comments versus code
 #   * Functions
 #   * Variables
 #   * Subsetting vectors
@@ -15,7 +27,23 @@
 #==============================================================================!
 
 #------------------------------------------------------------------------------!
-# Comments versus code ####
+# RStudio ####
+#------------------------------------------------------------------------------!
+# Good video tutorial:
+# https://rstudio.com/resources/webinars/programming-part-1-writing-code-in-rstudio/
+
+
+#------------------------------------------------------------------------------!
+# Scripts ####
+#------------------------------------------------------------------------------!
+# ALWAYS SAVE YOUR CODE IN SCRIPTS !
+#   * To document your work (think of them as a data analyst's lab notebook)
+#   * To quickly repeat an analysis in the future
+#   * To re-use your code for new analyses
+#   * To generate reports (rmarkdown scripts)
+
+#------------------------------------------------------------------------------!
+# Comments versus code
 #------------------------------------------------------------------------------!
 # Every R script is fundamentally just a text file.
 # In a standard R script (such as this) each line that starts with a hash
@@ -31,12 +59,6 @@
 # right corner of the script window. Useful for creating headers that help
 # organise and navigate a script.
 # (add an exclamation mark and they will be ignored)
-
-#------------------------------------------------------------------------------!
-# RStudio ####
-#------------------------------------------------------------------------------!
-# Good video tutorial:
-# https://rstudio.com/resources/webinars/programming-part-1-writing-code-in-rstudio/
 
 #------------------------------------------------------------------------------!
 # Data structures (1): scalars and vectors ####
@@ -81,6 +103,7 @@ help(package="base")
 # argument here.
 
 # Some examples of frequently used functions:
+# (note how we use vectors as arguments)
 sum(c(3, 4, 10))
 sqrt(121)
 mean(c(3, 4, 10))
@@ -114,24 +137,25 @@ print(my.second.variable)
 v1 <- c(14, 6, 2016)
 
 # Typing just the variable is equivalent to 'print()':
-v1 # output same as 'print(v1)'
+v1       # output same as 'print(v1)'
 
 # Output from 'cat()' has no row numbers:
 cat(v1)
 
 # The 'View()' function opens a new tab - mostly used to inspect large tables:
 # The tab will include several useful ways of inspecting and filtering a table.
-View(mtcars)
+View(mtcars)      # (mtcars is a dataset that comes with R)
 
 # A vector containing text:
 v2 <- c("Hello", "world", "!")
 print(v2)
 
-# Vector items can be 'glued' together using the paste() function:
+# Vector items can be 'glued' together into a single piece of text using the
+# 'paste()' function:
 paste(v1, collapse="-")
 paste(v2, collapse=" ")
 
-# It's easy to generate simply series of numbers:
+# It's easy to generate vectors with simple series of numbers:
 v3 <- 1:12
 print(v3)
 
@@ -152,7 +176,7 @@ names(v3)
 v3 * 10
 
 #------------------------------------------------------------------------------!
-# Subsetting vectors ####
+# Subsetting (1): Subsetting vectors ####
 #------------------------------------------------------------------------------!
 # You can select items from within a vector using square brackets + indices ...
 # A single index number...
@@ -206,9 +230,6 @@ is.numeric(v2)
 
 # Boolean format in R is called 'logical':
 
-class(mx1)
-typeof(mx1)
-
 #------------------------------------------------------------------------------!
 # Boolean/logical data ####
 #------------------------------------------------------------------------------!
@@ -237,10 +258,10 @@ is.numeric(1.2)
 #------------------------------------------------------------------------------!
 # Data structures (2): Matrices ####
 #------------------------------------------------------------------------------!
-# Matrices are 2-dimensional arrays/tables where each item (cell) has to be of
-# the same data type:
+# Matrices are 2-dimensional arrays/tables where each item (think of Excel
+# cells) has to be of the same data type:
 1:24                            # generates a vector
-mx1 <- matrix(1:24, ncol=6)     # turns vector into a matrix
+mx1 <- matrix(1:24, ncol=6)     # turns vector into a matrix with 6 columns
 mx1
 
 # Fill by column:
@@ -252,9 +273,10 @@ mx3 <- matrix(LETTERS[1:24], nrow=6, byrow=TRUE)
 mx3
 
 #------------------------------------------------------------------------------!
+# Calculations with vectors + matrices ####
+#------------------------------------------------------------------------------!
 # One of the great things about vectors and matrices in R is that they can be
 # modified with simple code:
-#------------------------------------------------------------------------------!
 print(v3)
 v3 * 100
 
@@ -266,17 +288,21 @@ mx1
 t(mx1)
 
 #------------------------------------------------------------------------------!
+# Data structures (3): Data frames ####
+#------------------------------------------------------------------------------!
 # Data frames are the most common container used to store data in R.
 # Each column can be a different data type:
-#------------------------------------------------------------------------------!
 df1 <- data.frame(Name=c("Jane", "Jack", "Jaim"),
                   Age=c(5, 12, 30),
                   Female=c(TRUE, FALSE, FALSE))
 df1
 View(df1)
 
+# To show what data type is found in each column of the data frame:
+sapply(df1, class)
+
 #------------------------------------------------------------------------------!
-# Subsetting data frames
+# Subsetting (2): Subsetting data frames ####
 #------------------------------------------------------------------------------!
 # Similar to vectors, extract data from data frames using square brackets;
 # rows and columns are separated by a comma:
@@ -290,7 +316,7 @@ df1[,1]
 # Accordingly, leaving the space AFTER the comma blank will return entire rows:
 df1[1,]
 
-# Here again, extract several rows/columns using number vectors:
+# As with vectors, extract several rows/columns using number/index vectors:
 df1[c(2,3), c(1,3)]
 
 # ... or boolean values:
@@ -312,11 +338,16 @@ df1
 
 # And similar to vectors, we can use row names and column names to subset
 # data frames:
-# (NOTE that text always to be defined with quotation marks)
-df1[,c("Nom", "Femelle")]
-df1[c("Row1", "Row3"),c("Nom", "Femelle")]
+# (NOTE that text always needs to be defined with quotation marks)
+# Select 2 columns (all rows):
+df1[, c("Nom", "Femelle")]
 
-df1[c("Row1", "Row3"),c("Femelle", "Nom")]
+# Select rows (all columns):
+df1[c("Row1", "Row3"), ]
+
+# Select columns and rows:
+df1[c("Row1", "Row3"), c("Nom", "Femelle")]
+
 
 # Sometimes code becomes easier to read if indices vectors are first stored
 # in a variable; then use the variable to subset the data frame:
@@ -328,7 +359,31 @@ df1[a, b]
 df1[b, c]
 
 #------------------------------------------------------------------------------!
-# Packages
+# Merging ("joining") data frames ####
+#------------------------------------------------------------------------------!
+# We often need to combine 2 data frames:
+df2a <- data.frame(
+        Gene = c("ABCG1", "IRF1", "STAT3", "NEU1"),
+        Gene.ID = c(9619, 3659, 6774, 4758)
+)
+
+df2b <- data.frame(
+        Gene = c("ABCG1", "IRF1", "STAT3", "NEU1"),
+        Gene.Name = c("ATP binding cassette subfamily G member 1",
+                      "interferon regulatory factor 1",
+                      "signal transducer and activator of transcription 3",
+                      "neuraminidase 1"
+                      )
+)
+
+df2a
+df2b
+
+df3 <- merge(x=df2a, y=df2b, by="Gene")
+df3
+
+#------------------------------------------------------------------------------!
+# Packages ####
 #------------------------------------------------------------------------------!
 # Packages extend the basic repertoire of R with new functions.
 # There are three main depositories for R packages: CRAN, Bioconductor and github
@@ -344,13 +399,13 @@ df1[b, c]
 # library(Biostrings)
 
 # FOR GEEKS:
-# To avoid downoading an already installed package, use this code in your scripts:
+# To avoid downloading an already installed package, use this code in your scripts:
 # (If the package is already installed, it will only be loaded; otherwise it will
 # be installed)
 # if (!require(wordcloud2)) install.packages("wordcloud2"); library(wordcloud2)
 
 #------------------------------------------------------------------------------!
-# Getting help
+# Getting help ####
 #------------------------------------------------------------------------------!
 median(c(1:3, 100, 1000))
 
@@ -393,16 +448,26 @@ vignette("magrittr")
 #------------------------------------------------------------------------------!
 # ********************************  EXERCISE!!  ********************************
 #------------------------------------------------------------------------------!
-# For the vector v6 below calculate:
-# mean/average
-# median
-# variance
-# standard deviation
-# standard error of the mean
+# R comes with a built-in data frame 'mtcars', which lists a number of variables
+# (in columns) for 32 different car models (in rows).
 
-v6 <- c(-0.18, 0.61, -0.12, 1.02, 1.69, 0.41, 0.3, -0.07, -0.51, 0.84,
-        0.69, -0.24, -1.17, 0.02, -0.81, 0.83, -0.62, -1.46, 0.44, -0.65,
-        -0.37, 1.56, -0.33, -0.4, -1.22, -1.29, -2.34, -0.61, -0.26,
-        -0.2, -1.48, 1.01, 0.27, 0.06, 0.79, 1.35, -2.01, -0.16, -1.45,
-        -0.49, -0.35, 1.39, -0.65, -0.2, -0.31, -0.66, -0.31, -1.2, -0.28,
-        -0.58)
+# Print first 6 rows:
+head(mtcars)
+
+# Print last 6 rows:
+tail(mtcars)
+
+# Print all rows:
+mtcars
+
+# Number of rows:
+nrow(mtcars)
+
+# Number of columns:
+ncol(mtcars)
+
+# Using the lessons above, subset the mtcars data frame to extract just those
+# car models with 8 cylinders (see cyl column)
+
+
+
