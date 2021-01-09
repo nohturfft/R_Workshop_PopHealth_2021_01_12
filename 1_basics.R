@@ -14,16 +14,20 @@
 
 #==============================================================================!
 # WORKSHOP CONTENTS
-#   * RStudio
-#   * Scripts: Comments versus code
-#   * Functions
-#   * Variables
-#   * Subsetting vectors
-#   * R data types
-#   * Data formats: scalar, vector, matrix, data frame
-#   * Date classes: number, string/character, boolean/logical
-#   * Setting the working directory + listing local files
-#   * Getting help
+#  * RStudio
+#  * Scripts
+#  * Data structures (1): scalars and vectors
+#  * Functions
+#  * Variables
+#  * Subsetting (1): Subsetting vectors
+#  * Boolean/logical data
+#  * Data structures (2): Matrices
+#  * Calculations with vectors + matrices
+#  * Data structures (3): Data frames
+#  * Subsetting (2): Subsetting data frames
+#  * Merging ("joining") data frames
+#  * Packages
+#  * Getting help + "stealing" code
 #==============================================================================!
 
 #------------------------------------------------------------------------------!
