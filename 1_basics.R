@@ -2,13 +2,16 @@
 # INTRO TO R PROGRAMMING AND RSTUDIO (12-Jan-2021) ####
 #==============================================================================!
 # THE BASICS
-# * Comments versus code
-# * RStudio
-# * Data formats: scalar, vector, matrix, data frame
-# * Subsetting vectors
-# * Date classes: number, string/character, boolean/logical
-# * Setting the working directory + listing local files
-# * Getting help
+#   * Comments versus code
+#   * RStudio
+#   * Functions
+#   * Variables
+#   * Subsetting vectors
+#   * R data types
+#   * Data formats: scalar, vector, matrix, data frame
+#   * Date classes: number, string/character, boolean/logical
+#   * Setting the working directory + listing local files
+#   * Getting help
 #==============================================================================!
 
 #------------------------------------------------------------------------------!
@@ -23,10 +26,11 @@
 # reversed: by default text is interpreted as comments and code must be
 # specifically indicated.)
 
-# Typing four hash marks (#) or dashes (-) at the end of a line makes that line
-# appear in the RStudio navigation pane, available in the top right corner of
-# the script window. Useful to indicate headers to help organise and navigate a
-# script. (four dashes followed by an exclamation mark will be ignored)
+# Typing four hash marks (#), dashes (-) or equal signs (=) at the end of a line
+# makes that line appear in the RStudio navigation pane, available in the top
+# right corner of the script window. Useful for creating headers that help
+# organise and navigate a script.
+# (add an exclamation mark and they will be ignored)
 
 #------------------------------------------------------------------------------!
 # RStudio ####
@@ -48,11 +52,22 @@ LETTERS
 month.abb
 month.name
 
+# Vectors can be generated using the c() function:
+c(14, 6, 2016)
+
 #------------------------------------------------------------------------------!
 # Functions ####
 #------------------------------------------------------------------------------!
 # Functions are used to manipulate data.
-# R functions are very similar to worksheet functions in Excel:
+
+# R includes all the standard arithmetic function symbols: + - * / ^
+3 + 4
+300 / 100
+10 - 9
+2 ^ 4
+12 %% 5 # modulo
+
+# Named R functions are very similar to worksheet functions in Excel:
 #   1. Each function has a different name
 #   2. Function names are always followed by brackets
 #   3. Information typed between the brackets are called "arguments"
@@ -65,36 +80,48 @@ help(package="base")
 # So 'help()' is a first example of a function. ' package="base" ' is the
 # argument here.
 
+# Some examples of frequently used functions:
+sum(c(3, 4, 10))
+sqrt(121)
+mean(c(3, 4, 10))
+max(c(3, 4, 10))
+min(c(3, 4, 10))
 
 
 #------------------------------------------------------------------------------!
-# Variables
+# Variables ####
 #------------------------------------------------------------------------------!
 # Usually data are stored in named VARIABLES
-# * Variables can be long
-# * Variables CANNOT contain spaces
-# * Variables CANNOT start with a number (but numbers can appear elsewhere in the name)
+#   * Variables are defined with the '<-' assignment operator
+#   * Variable names can be very long
+#   * Variables CANNOT contain spaces
+#   * Variables CANNOT start with a number (but numbers can appear elsewhere)
 
 # Two scalars:
 my.first.variable <- "Hello world!"
 my.second.variable <- 2019
 
-# Use 'print()' or 'cat()' command to display the contents of a variable:
+# *** Note that variables are listed in the 'Environment' tab in the top right
+# RStudio panel ***
+
+# Use the 'print()' or 'cat()' function to display the contents of a variable
+# in the Console panel:
 # Output from 'print()' is preceded by row numbers in square brackets:
 print(my.first.variable)
 print(my.second.variable)
 
-# Vectors can be generated using the c() function:
+# Vectors can be generated using the 'c()' function:
 v1 <- c(14, 6, 2016)
 
-# Just the variable is equivalent to 'print()'
-v1 # same as print(v1)
+# Typing just the variable is equivalent to 'print()':
+v1 # output same as 'print(v1)'
 
 # Output from 'cat()' has no row numbers:
 cat(v1)
 
 # The 'View()' function opens a new tab - mostly used to inspect large tables:
-View(v1)
+# The tab will include several useful ways of inspecting and filtering a table.
+View(mtcars)
 
 # A vector containing text:
 v2 <- c("Hello", "world", "!")
@@ -108,25 +135,30 @@ paste(v2, collapse=" ")
 v3 <- 1:12
 print(v3)
 
-# There seq command can generate more complicated number vectors:
+# The seq command can generate more complicated number vectors:
 seq(from=1, to=22, by=3)
 seq(from=1, to=10, length.out=19)
 
 # Vector items can have names:
-print(v3)
+# The names() function is used both to define and to return the names
+# of a data object.
+v3
 month.abb
 names(v3) <- month.abb
 print(v3)
 names(v3)
 
+# In R it is very easy to manipulate all items in a vector with simple code:L
+v3 * 10
+
 #------------------------------------------------------------------------------!
-# Subsetting vectors
+# Subsetting vectors ####
 #------------------------------------------------------------------------------!
 # You can select items from within a vector using square brackets + indices ...
 # A single index number...
 LETTERS
 LETTERS[10]
-# ... or a vector of numbers ...
+# ... or a vector of index numbers ...
 c(8,5,12,12,15)
 LETTERS[c(8,5,12,12,15)]
 
@@ -141,12 +173,44 @@ v3[c("Jan", "Mar")]
 # ... or using boolean/logical values (TRUE/FALSE):
 v4 <- 1:3
 v4
-(v4 <- 1:3)
 c(TRUE, FALSE, TRUE)
 v4[c(TRUE, FALSE, TRUE)]
 
+# It can be easier to save a vector in a variable first, then use the variable
+# for subsetting:
+x <- v4 > 1
+x
+v4[x]
+
 #------------------------------------------------------------------------------!
-# Boolean/logical data
+# Data types in R ####
+#------------------------------------------------------------------------------!
+# As we have already seen the most important data TYPES in R are:
+#   1. numeric
+#   2. text (aka 'character' or 'strings')
+#   3. Boolean (aka 'logical')
+
+# (numeric data are split further into sub-categories but we don't to worry
+# about that here)
+
+# Numeric:
+v3
+is.numeric(v3)
+typeof(v3) # integer = whole numbers
+
+# Text format in R is called 'character':
+v2
+typeof(v2)
+is.character(v2)
+is.numeric(v2)
+
+# Boolean format in R is called 'logical':
+
+class(mx1)
+typeof(mx1)
+
+#------------------------------------------------------------------------------!
+# Boolean/logical data ####
 #------------------------------------------------------------------------------!
 # Boolean/logical values are often generated through 'equal' or
 # 'greather/lesser than' (<==>) operations:
@@ -155,27 +219,28 @@ v4[c(TRUE, FALSE, TRUE)]
 3 == 3.0
 4 == 5
 # The following generates a vector of boolean values:
-1:10
-1:10 >= 5
+1:10         # generates a vector of numbers from 1 to 10
+1:10 >= 5    # generates a vector of boolean values
 v5 <- 1:10 >= 5
 v5
 names(v5) <- 1:10
 print(v5)
 
-class(v5)
+class(v5) # Boolean values in R are called "logical"
 is.logical(v5)
 is.logical(letters)
 typeof(letters)
-typeof(1:10)
-typeof(1.2)
+is.numeric(1:10)
+is.numeric(1.2)
 
 
+#------------------------------------------------------------------------------!
+# Data structures (2): Matrices ####
 #------------------------------------------------------------------------------!
 # Matrices are 2-dimensional arrays/tables where each item (cell) has to be of
 # the same data type:
-#------------------------------------------------------------------------------!
-1:24
-mx1 <- matrix(1:24, ncol=6)
+1:24                            # generates a vector
+mx1 <- matrix(1:24, ncol=6)     # turns vector into a matrix
 mx1
 
 # Fill by column:
@@ -194,8 +259,9 @@ print(v3)
 v3 * 100
 
 print(mx1)
-mx1
 mx1 + 1000
+
+# Transpose with 't()' function:
 mx1
 t(mx1)
 
