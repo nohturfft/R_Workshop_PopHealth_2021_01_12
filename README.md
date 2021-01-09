@@ -49,3 +49,4 @@ Alternatively, you can install packages using the RStudio `Tools > Install Packa
 7. Click the "Create project" button  
 8. Open the "1_basics.R" script ...  
 
+x
